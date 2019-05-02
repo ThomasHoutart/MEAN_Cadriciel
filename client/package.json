@@ -1,6 +1,7 @@
 {
   "name": "client",
   "version": "0.0.0",
+  "description": "Basic frame for web application",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

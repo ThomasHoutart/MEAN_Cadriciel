@@ -1,3 +1,4 @@
+// microsoft-contrib tslint file
 {
   "rulesDirectory": [
     "node_modules/codelyzer",
