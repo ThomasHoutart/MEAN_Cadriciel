@@ -18,6 +18,8 @@ coverage/
 *.js.map
 *.js
 
+##Enlever le package produit par npm install
+package-lock.json
 
 # Garder les fichiers necessaires pour les tests
 !systemjs.config.js
