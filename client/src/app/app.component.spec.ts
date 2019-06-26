@@ -1,12 +1,16 @@
+import { HttpClientModule } from "@angular/common/http";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { RouterTestingModule } from "@angular/router/testing";
+import {HTTP_REQUEST_INIT, SERVICE_INIT, SOCKET_INIT} from "../../../common/constant/App/constant";
 import { AppComponent } from "./app.component";
 
 describe("AppComponent", () => {
+
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
+        HttpClientModule,
       ],
       declarations: [
         AppComponent,
@@ -14,25 +18,21 @@ describe("AppComponent", () => {
     }).compileComponents().catch();
   }));
 
-  it("should create the app", () => {
-    const fixture: ComponentFixture<AppComponent> = TestBed.createComponent(AppComponent);
-    // tslint:disable:no-any
-    const app: any = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'client'`, () => {
-    const fixture: ComponentFixture<AppComponent> = TestBed.createComponent(AppComponent);
-    // tslint:disable:no-any
-    const app: any = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual("client");
-  });
-
-  it("should render title in a h1 tag", () => {
-    const fixture: ComponentFixture<AppComponent> = TestBed.createComponent(AppComponent);
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
     fixture.detectChanges();
-    // tslint:disable:no-any
-    const compiled: any = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector("h1").textContent).toContain("Welcome to client!");
   });
+
+  it("should create the app", () => {
+    expect(component).toBeTruthy();
+  });
+
+  it("ngOnInt should initialize the title, service, http request and socket message", () => {
+    expect(component.title).toMatch("Client");
+    expect(component.serviceTest).toMatch(SERVICE_INIT);
+    expect(component.httpTest).toMatch(HTTP_REQUEST_INIT);
+    expect(component.socketTest).toMatch(SOCKET_INIT);
+  });
+
 });

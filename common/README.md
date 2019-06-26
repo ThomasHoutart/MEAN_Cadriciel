@@ -1,0 +1,1 @@
+folder purposes is to store interfaces and constants
