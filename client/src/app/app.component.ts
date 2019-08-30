@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { take } from "rxjs/operators";
 import {HTTP_REQUEST_INIT, SERVICE_INIT, SOCKET_INIT} from "../../../common/constant/App/constant";
 import {TesterService} from "./Test/tester.service";
 
@@ -14,6 +15,12 @@ export class AppComponent implements OnInit {
   public socketTest: string;
 
   public constructor(private test: TesterService) {}
+
+  public test2(): void {
+    this.test.httpRequestTest().pipe(take(1)).subscribe((message: string) => {
+      this.httpTest = message;
+    });
+  }
 
   public ngOnInit(): void {
 

@@ -1,6 +1,7 @@
 import * as http from "http";
 import { inject, injectable } from "inversify";
 import { AddressInfo } from "net";
+import * as IO from "socket.io";
 import { Application } from "./app";
 import Types from "./types";
 
@@ -9,6 +10,7 @@ export class Server {
 
     private readonly appPort: string|number|boolean = this.normalizePort(process.env.PORT || "3000");
     private readonly baseDix: number = 10;
+    private io: IO.Server;
     private server: http.Server;
 
     public constructor(@inject(Types.Application) private application: Application) { }
@@ -21,6 +23,7 @@ export class Server {
         this.server.listen(this.appPort);
         this.server.on("error", (error: NodeJS.ErrnoException) => this.onError(error));
         this.server.on("listening", () => this.onListening());
+        this.socketService();
     }
 
     private normalizePort(val: number | string): number | string | boolean {
@@ -60,4 +63,9 @@ export class Server {
         // tslint:disable-next-line:no-console
         console.log(`Listening on ${bind}`);
     }
+
+    private socketService(): void {
+        this.io = IO(this.server);
+    }
+
 }

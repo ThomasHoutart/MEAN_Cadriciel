@@ -2,8 +2,10 @@ import * as bodyParser from "body-parser";
 import * as cookieParser from "cookie-parser";
 import * as cors from "cors";
 import * as express from "express";
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
 import * as logger from "morgan";
+import { Routes } from "./routes";
+import Types from "./types";
 
 @injectable()
 export class Application {
@@ -11,12 +13,12 @@ export class Application {
     private readonly internalError: number = 500;
     public app: express.Application;
 
-    public constructor() {
+    public constructor(@inject(Types.Routes) private api: Routes) {
         this.app = express();
 
         this.config();
 
-        this.bindRoutes();
+        this.routes();
     }
 
     private config(): void {
@@ -28,8 +30,11 @@ export class Application {
         this.app.use(cors());
     }
 
-    public bindRoutes(): void {
-        // Notre application utilise le routeur de notre API `Index`
+    public routes(): void {
+        const router: express.Router = express.Router();
+        router.use(this.api.routes);
+        this.app.use(router);
+
         this.errorHandeling();
     }
 
